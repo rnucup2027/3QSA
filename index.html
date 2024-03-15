@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Tokyo Toss Tempest</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+      <style>
+            @font-face {
+                font-family: button;
+                src: url(fonts/button.ttf);
+          }
+          body {
+              background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9100d753-02ac-4ed8-ac98-5e45d6deecad/dg3vdgf-a35ac598-3764-483d-9a0f-b58434fcb9c5.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzkxMDBkNzUzLTAyYWMtNGVkOC1hYzk4LTVlNDVkNmRlZWNhZFwvZGczdmRnZi1hMzVhYzU5OC0zNzY0LTQ4M2QtOWEwZi1iNTg0MzRmY2I5YzUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.OKa480aeZEPsilog5lllpNPVORluLzxk2TcVOoaZFA4') no-repeat center center fixed;
+              background-size: cover;
+              font-family: button;
+              color: black;
+              overflow: hidden;
+              margin: 0;
+          }
+          @font-face {
+                font-family: box;
+                src: url(fonts/box.otf);
+          }
+          h1 {
+            font-family: box;
+            font-size: 5em;
+            color: darkblue;
+          }
+          @font-face {
+                font-family: write;
+                src: url(fonts/write.ttf);
+          }
+          h4 {
+            font-family: write;
+            color: darkblue;
+            margin-right:30px;
+            margin-left: 30px;
+          }
+          #home-page {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+                color: black;
+                border: 2px solid darkblue;
+                width: 800px;
+                height: 650px;
+                margin: 20px auto;
+                text-align: center;
+                background-color: white;
+                border-radius: 45px;
+                opacity: 95%;
+          }
+
+          #game-page {
+              display: none;
+              position: relative;
+              height: 100vh;
+          }
+
+          #scoreboard {
+              position:absolute;
+              top: 10px;
+              right: 10px;
+              color: black;
+              z-index: 3;
+          }
+
+          #basket {
+              position: absolute;
+              bottom: 10px;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 60px;
+              height: 60px;
+              background: url('images/basket.png') no-repeat center center;
+              background-size: contain;
+              border-radius: 5px;
+              overflow: hidden;
+              z-index: 2;
+          }
+
+          #laser {
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 5px;
+              background-color: purple;
+              display: block;
+              z-index: 1;
+          }
+
+          .falling-ball {
+              width: 70px;
+              height: 70px;
+              position: absolute;
+          }
+          button {
+            width: 300px;
+            margin-bottom: 5px;
+            opacity: 100%;
+          }
+          #scoreboard {
+            font-size: 50px;
+          }
+          a {
+            color: white;
+            text-decoration: none;
+          }
+          .btn {
+            width: 300px;
+            margin-bottom: 5px;
+            opacity: 100%;
+}
+
+      </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="home-page">
+          <h1>Tokyo Toss Tempest</h1>
+          <h4>the clumsy delivery man accidentally tossed his parcels around tokyo and can't stop driving! help him catch it, but beware of the potion.</h4>
+          <h6>boba: 1pt, sushi: 3pts, potion: -5pts</h6>
+          <button id="play-btn" class="btn btn-warning btn-lg">Play</button>
+          <a class="btn btn-dark btn-lg" href="how.html">
+            How to Play
+          </a>    
+          <a class="btn btn-secondary btn-lg" href="about.html">
+            About the Developers
+          </a>      
+        </div>
+
+      <div id="game-page">
+          <div id="scoreboard">Score: <span id="score">0</span></div>
+          <div id="basket"></div>
+          <div id="laser"></div>
+      </div>
+    </div>  
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+          document.addEventListener("DOMContentLoaded", function () {
+              const basket = document.getElementById("basket");
+              const laser = document.getElementById("laser");
+              const scoreDisplay = document.getElementById("score");
+              let fallInterval;
+
+              let score = 0;
+              let gameActive = false;
+
+              document.addEventListener("mousemove", function (event) {
+                const basketWidth = basket.offsetWidth;
+                const halfBasketWidth = basketWidth / 2; 
+                const basketX = event.clientX - halfBasketWidth;
+
+                const minX = 0;
+                const maxX = window.innerWidth - basketWidth;
+                const clampedX = Math.max(minX, Math.min(maxX, basketX));
+
+                basket.style.left = clampedX + "px";
+            });
+
+
+              function checkCollision(ballElement) {
+                  const ballRect = ballElement.getBoundingClientRect();
+                  const laserRect = laser.getBoundingClientRect();
+
+                  if (
+                      ballRect.bottom >= laserRect.top &&
+                      ballRect.top <= laserRect.bottom &&
+                      ballRect.right >= laserRect.left &&
+                      ballRect.left <= laserRect.right
+                  ) {
+                      if (ballElement.classList.contains("red-ball") && ballElement.classList.contains("caught")) {
+                          if (score < 4) {
+                              gameOver();
+                          } else {
+                              score = Math.max(0, score - 5);
+                              scoreDisplay.innerText = score;
+                          }
+                      } else if (!ballElement.classList.contains("red-ball")) {
+                          gameOver();
+                      }
+                      ballElement.remove();
+                  }
+              }
+
+              function fallBall() {
+                  const ballElement = document.createElement("div");
+                  ballElement.className = "falling-ball";
+
+                  const ballType = Math.random() < 0.4 ? "red" : Math.random() < 0.7 ? "yellow" : "orange";
+                  ballElement.classList.add(ballType + "-ball");
+                  ballElement.style.left = Math.floor(Math.random() * (window.innerWidth - 50)) + "px";
+                  ballElement.style.background = `url('${getBallImage(ballType)}')`;
+
+                  document.getElementById("game-page").appendChild(ballElement);
+
+                  fallInterval = setInterval(function () {
+                      const posY = ballElement.offsetTop;
+                      const basketPosY = basket.offsetTop;
+                      const basketHeight = basket.offsetHeight;
+                      const posX = ballElement.offsetLeft;
+                      const basketPosX = basket.offsetLeft;
+                      const basketWidth = basket.offsetWidth;
+
+                      if (
+                          posY + 50 >= basketPosY &&
+                          posY <= basketPosY + basketHeight &&
+                          posX + 50 >= basketPosX &&
+                          posX <= basketPosX + basketWidth
+                      ) {
+                          if (ballType === "red") {
+                              if (score <= 4) {
+                                  gameOver();
+                              } 
+                              else {
+                                  score = Math.max(0, score - 5);
+                              }
+                          } else if (ballType === "yellow") {
+                              score += 3;
+                          } else if (ballType === "orange") {
+                              score++;
+                          }
+                          if (score < 0) {
+                            gameOver();
+                          }
+                          scoreDisplay.innerText = score;
+                          ballElement.classList.add("caught");
+                          ballElement.remove();
+                      }
+
+                      if (posY >= window.innerHeight - 50) {
+                          if (ballType === "yellow" || ballType === "orange") {
+                              gameOver();
+                          }
+                          ballElement.remove();
+                      } else {
+                          ballElement.style.top = posY + 1 + "px";
+                          checkCollision(ballElement);
+                      }
+                  }, 10);
+              }
+
+              function getBallImage(ballType) {
+                  if (ballType === "yellow") {
+                      return 'images/yb.png';
+                  } else if (ballType === "orange") {
+                      return 'images/ob.png';
+                  } else if (ballType === "red") {
+                      return 'images/rb.png';
+                  }
+              }
+
+              function startGame() {
+                  document.getElementById("home-page").style.display = "none";
+                  document.getElementById("game-page").style.display = "block";
+                  gameActive = true;
+
+                  fallInterval = setInterval(function () {
+                      fallBall();
+                  }, 3000);
+              }
+
+              function gameOver() {
+                  if (gameActive) {
+                      clearInterval(fallInterval);
+                      const playAgain = window.confirm("Game Over! Try Again!");
+
+                      if (playAgain) {
+                          gameActive = false;
+                          document.getElementById("home-page").style.display = "flex";
+                          document.getElementById("game-page").style.display = "none";
+                          score = 0;
+                          scoreDisplay.innerText = score;
+                      } else {
+                          gameActive = false;
+                          document.location.reload();
+                      }
+                  }
+              }
+              document.getElementById("play-btn").addEventListener("click", startGame);
+          });
+      </script>
+  </body>
+</html>

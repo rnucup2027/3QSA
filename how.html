@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tips & Tricks</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        @font-face {
+                font-family: button;
+                src: url(fonts/button.ttf);
+          }
+          @font-face {
+                font-family: box;
+                src: url(fonts/box.otf);
+          }
+          @font-face {
+                font-family: write;
+                src: url(fonts/write.ttf);
+          }
+        body {
+            background-color: rgb(218, 255, 218);
+            font-family: write;
+        }
+
+        header {
+            font-family: box;
+            background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/9100d753-02ac-4ed8-ac98-5e45d6deecad/dg3vdgf-a35ac598-3764-483d-9a0f-b58434fcb9c5.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzkxMDBkNzUzLTAyYWMtNGVkOC1hYzk4LTVlNDVkNmRlZWNhZFwvZGczdmRnZi1hMzVhYzU5OC0zNzY0LTQ4M2QtOWEwZi1iNTg0MzRmY2I5YzUuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.OKa480aeZEPsilog5lllpNPVORluLzxk2TcVOoaZFA4');
+            background-color: rgb(218, 55, 104);
+            color: rgb(255, 254, 198);
+            padding: 20px;
+            width: 100%;
+            margin: auto;
+            text-align: center;
+        }
+
+        .navbar.about-navbar {
+            background-color: darkblue;
+            border-radius: 45px;
+            margin: 5px auto;
+        }
+
+        .navbar.about-navbar .navbar-brand,
+        .navbar.about-navbar .navbar-nav .nav-link {
+            color: white;
+        }
+
+        .container {
+            margin-top: 20px;
+        }
+        h1 {
+            margin-top: 56px;
+            font-size: 7em;
+            color: rgb(218, 55, 104);
+        }
+        h2,
+        h3 {
+            font-family: button;
+            color: rgb(255, 170, 0);
+        }
+
+        .container p, li {
+            font-family: write;
+            color: darkblue;
+        }
+
+        .tip {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgb(217, 245, 255);
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 13, 63, 0.559);
+        }
+        .tip img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .game-info {
+            margin-top: 20px;
+        }
+
+        footer {
+            background-color: darkblue;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>How to Play</h1>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top about-navbar">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="how.html">How to Play TTT</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About the Developers</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>How to Play Tokyo Toss Tempest</h2>
+
+        <div class="tip">
+            <h3>Control the basket</h3>
+            <p>Use your cursor or finger to move the basket to accurately catch the parcels.</p>
+        </div>
+
+        <div class="tip">
+            <h3>Avoid dropping the food</h3>
+            <p>Don't let the sushi and boba touch the floor! The customers won't be able to consume it if they do.</p>
+        </div>
+
+        <div class="tip">
+            <h3>The Only Exception</h3>
+            <p>You can let the potion touch the floor. Your score will be devastated if you catch it.</p>
+        </div>
+
+        <div class="tip">
+            <h3>How to Stop the Man from Driving</h3>
+            <p>You can't. It's his life's destiny.</p>
+        </div>
+
+        <h2 class="game-info">Keep in Mind....</h2>
+
+        <p>Don't forget to enjoy the game and live the moment! Life is short.</p>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Tokyo Toss Tempest. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
